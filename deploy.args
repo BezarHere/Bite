@@ -1,0 +1,22 @@
+-proj
+"E:\Assets\visual studio\ByteBlender"
+-src
+"..\src"
+-inc
+"E:\Assets\CppLibs\Bite\include"
+-lib64d
+"..\x64\Debug\Bite.lib"
+"E:\Assets\CppLibs\Bite\lib\bite64-d.lib"
+/c
+-lib64
+"..\x64\Release\Bite.lib"
+"E:\Assets\CppLibs\Bite\lib\bite64.lib"
+/c
+lib32d
+"..\Win32\Debug\Bite.lib"
+"E:\Assets\CppLibs\Bite\lib\bite32-d.lib"
+/c
+-lib32
+"..\Win32\Release\Bite.lib"
+"E:\Assets\CppLibs\Bite\lib\bite32.lib"
+/c

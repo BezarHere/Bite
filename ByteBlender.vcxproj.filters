@@ -18,14 +18,23 @@
     <ClInclude Include="src\Bite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\_bite_private.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\_bite_private.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="build.py" />
     <None Include="cpp.hint" />
+    <None Include="deploy.bat">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="deploy.args" />
   </ItemGroup>
 </Project>
