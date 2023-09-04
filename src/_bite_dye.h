@@ -2,11 +2,12 @@
 #include "_bite_utility.h"
 #include <iostream>
 
+
 namespace bite
 {
 	namespace dye
 	{
-
+#ifdef _WINDOWS_
 
 		enum class ColorCode : uint8_t
 		{
@@ -28,29 +29,73 @@ namespace bite
 			BrightWhite
 		};
 
-		struct TerminalTheme {
+		struct TerminalColor {
 			ColorCode fg, bg = ColorCode::Black;
 		};
 
-		extern TerminalTheme M_GetTheme();
-		extern TerminalTheme M_GetDefaultTheme();
-		extern void M_PutTheme(TerminalTheme theme);
+		inline constexpr uint8_t unpack_colors(TerminalColor theme)
+		{
+			return (uint8_t)theme.fg + ((uint8_t)theme.bg << 4);
+		}
+
+		inline constexpr TerminalColor pack_colors(uint8_t theme)
+		{
+			return { (ColorCode)(theme & 0xf), (ColorCode)(theme >> 4) };
+		}
+
+		inline TerminalColor get_colors()
+		{
+			return TerminalColor{};
+		}
+
+		static const TerminalColor F_DefaultC{ get_colors() };
+
+		inline TerminalColor get_default_colors()
+		{
+			return F_DefaultC;
+		}
+
+		inline void put_colors(TerminalColor theme)
+		{
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)unpack_colors(theme));
+		}
+
 		// will return to the same theme the program started with
-		extern void M_ClearTheme();
+		inline void clear_colors()
+		{
+			put_colors(F_DefaultC);
+		}
 
-		extern constexpr uint8_t M_UnpackTheme(TerminalTheme theme);
-		extern constexpr TerminalTheme M_PackTheme(uint8_t theme);
+		inline void dye(const std::string &text,
+											const TerminalColor colors = TerminalColor{ ColorCode::BrightWhite },
+											std::ostream &stream = std::cout)
+		{
+			TerminalColor def_t = get_colors();
+			put_colors(colors);
+			stream << text;
+			put_colors(def_t);
+		}
 
+		inline void dye(const char *text,
+											const TerminalColor colors = TerminalColor{ ColorCode::BrightWhite },
+											std::ostream &stream = std::cout)
+		{
+			TerminalColor def_t = get_colors();
+			put_colors(colors);
+			stream << text;
+			put_colors(def_t);
+		}
 
-		extern void M_Dye(const std::string &text,
-											const TerminalTheme colors = TerminalTheme{ ColorCode::BrightWhite },
-											std::ostream &stream = std::cout);
-		extern void M_Dye(const char *text,
-											const TerminalTheme colors = TerminalTheme{ ColorCode::BrightWhite },
-											std::ostream &stream = std::cout);
-		extern void M_Dye(const std::exception &exc,
-											const TerminalTheme colors = TerminalTheme{ ColorCode::Red },
-											std::ostream &stream = std::cout);
+		inline void dye(const std::exception &exc,
+											const TerminalColor colors = TerminalColor{ ColorCode::Red },
+											std::ostream &stream = std::cout)
+		{
+			TerminalColor def_t = get_colors();
+			put_colors(colors);
+			stream << exc.what() << std::endl;
+			put_colors(def_t);
+		}
+#endif
 	}
 
 }

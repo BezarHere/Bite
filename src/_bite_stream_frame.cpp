@@ -2,29 +2,11 @@
 #include <vector>
 #include <string>
 #include <exception>
-#include "_bite_StreamFrame.h"
+#include "_bite_stream_frame.h"
 #include "_bite_defines.h"
 
 
-constexpr char16_t HexTable[ 256 ]
-{
-	'00', '10', '20', '30', '40', '50', '60', '70', '80', '90', 'a0', 'b0', 'c0', 'd0', 'e0', 'f0',
-	'01', '11', '21', '31', '41', '51', '61', '71', '81', '91', 'a1', 'b1', 'c1', 'd1', 'e1', 'f1',
-	'02', '12', '22', '32', '42', '52', '62', '72', '82', '92', 'a2', 'b2', 'c2', 'd2', 'e2', 'f2',
-	'03', '13', '23', '33', '43', '53', '63', '73', '83', '93', 'a3', 'b3', 'c3', 'd3', 'e3', 'f3',
-	'04', '14', '24', '34', '44', '54', '64', '74', '84', '94', 'a4', 'b4', 'c4', 'd4', 'e4', 'f4',
-	'05', '15', '25', '35', '45', '55', '65', '75', '85', '95', 'a5', 'b5', 'c5', 'd5', 'e5', 'f5',
-	'06', '16', '26', '36', '46', '56', '66', '76', '86', '96', 'a6', 'b6', 'c6', 'd6', 'e6', 'f6',
-	'07', '17', '27', '37', '47', '57', '67', '77', '87', '97', 'a7', 'b7', 'c7', 'd7', 'e7', 'f7',
-	'08', '18', '28', '38', '48', '58', '68', '78', '88', '98', 'a8', 'b8', 'c8', 'd8', 'e8', 'f8',
-	'09', '19', '29', '39', '49', '59', '69', '79', '89', '99', 'a9', 'b9', 'c9', 'd9', 'e9', 'f9', 
-	'0a', '1a', '2a', '3a', '4a', '5a', '6a', '7a', '8a', '9a', 'aa', 'ba', 'ca', 'da', 'ea', 'fa',
-	'0b', '1b', '2b', '3b', '4b', '5b', '6b', '7b', '8b', '9b', 'ab', 'bb', 'cb', 'db', 'eb', 'fb',
-	'0c', '1c', '2c', '3c', '4c', '5c', '6c', '7c', '8c', '9c', 'ac', 'bc', 'cc', 'dc', 'ec', 'fc',
-	'0d', '1d', '2d', '3d', '4d', '5d', '6d', '7d', '8d', '9d', 'ad', 'bd', 'cd', 'dd', 'ed', 'fd',
-	'0e', '1e', '2e', '3e', '4e', '5e', '6e', '7e', '8e', '9e', 'ae', 'be', 'ce', 'de', 'ee', 'fe',
-	'0f', '1f', '2f', '3f', '4f', '5f', '6f', '7f', '8f', '9f', 'af', 'bf', 'cf', 'df', 'ef', 'ff'
-};
+
 
 __forceinline char *copymem(const char *src, size_t src_len)
 {
@@ -33,18 +15,6 @@ __forceinline char *copymem(const char *src, size_t src_len)
 
 namespace bite
 {
-
-	template <typename STREAM>
-	StreamFrame<STREAM>::StreamFrame()
-		: m_stream{ nullptr }, m_order{ EndianOrder::Little }
-	{
-	}
-
-	template<typename STREAM>
-	StreamFrame<STREAM>::StreamFrame(std::shared_ptr<STREAM> stream, EndianOrder order)
-		: m_stream{ stream }, m_order{ order }
-	{
-	}
 
 	StreamWriter::StreamWriter()
 		: StreamFrame()
@@ -92,68 +62,15 @@ namespace bite
 	{
 	}
 
+	
 
-	template <typename STREAM>
-	void StreamFrame<STREAM>::setStream(STREAM *stream)
-	{
-		if (!stream)
-			throw std::runtime_error("'stream' is nullptr.");
-
-	}
-
-	template <typename STREAM>
-	void StreamFrame<STREAM>::setStream(std::shared_ptr<STREAM> stream)
-	{
-	}
-
-	template <typename STREAM>
-	std::shared_ptr<STREAM> StreamFrame<STREAM>::getStream()
-	{
-		return m_stream;
-	}
-
-	template <typename STREAM>
-	const std::shared_ptr<const STREAM> StreamFrame<STREAM>::getStream() const
-	{
-		return (std::shared_ptr<const STREAM>)m_stream;
-	}
-
-	template<typename STREAM>
-	EndianOrder StreamFrame<STREAM>::order() const
-	{
-		return m_order;
-	}
-
-	template<typename STREAM>
-	std::ios::iostate StreamFrame<STREAM>::state() const
-	{
-		return m_stream ? m_stream->rdstate() : -1;
-	}
-
-	template<typename STREAM>
-	bool StreamFrame<STREAM>::valid() const
-	{
-		return m_stream && m_stream->good();
-	}
-
-	template<typename STREAM>
-	StreamFrame<STREAM>::operator bool() const
-	{
-		return valid();
-	}
-
-	template<typename STREAM>
-	bool StreamFrame<STREAM>::operator!() const
-	{
-		return !valid();
-	}
 
 	void StreamReader::move(intptr_t offset)
 	{
 		// base-case
 		if (!offset) return;
 
-		intptr_t dst{ (intptr_t)cursor() + offset };
+		intptr_t dst{ ((intptr_t)cursor()) + offset };
 
 		if (dst < 0) halt("move distenation underflow");
 		if (dst >= (intptr_t)size()) halt("move distenation overflow");
@@ -302,7 +219,7 @@ namespace bite
 		// why?
 		for (size_t i{0}; i < length; i++)
 		{
-			((char16_t*)buffer)[ (i + 1) ] = HexTable[ ptr[ i ] ];
+			((char16_t*)buffer)[ (i + 1) ] = F_HexTable[ ptr[ i ] ];
 		}
 		return BufferSmartPtr_t( buffer );
 	}

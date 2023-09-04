@@ -21,7 +21,7 @@
     <ClInclude Include="src\_bite_utility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\_bite_StreamFrame.h">
+    <ClInclude Include="src\_bite_stream_frame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\_bite_defines.h">
@@ -30,13 +30,25 @@
     <ClInclude Include="src\_bite_dye.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\_bite_Tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\_bite_mempool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\_bite_span.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\_bite_dynarray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\_bite_array_stack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\_bite_algorithms.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\_bite_common_passwords.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\_bite_range.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -44,13 +56,7 @@
     <ClCompile Include="src\Bite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\_bite_utility.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\_bite_StreamFrame.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\_bite_dye.cpp">
+    <ClCompile Include="src\_bite_stream_frame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\_bite_FileSystem.h">
@@ -66,5 +72,6 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="deploy.args" />
+    <None Include="rules.ruleset" />
   </ItemGroup>
 </Project>
