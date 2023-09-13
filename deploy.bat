@@ -1,1 +1,1 @@
-py "..\lib_build.py" -args "deploy.args"
+py -m hivecpp /f "deploy.args"

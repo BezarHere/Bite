@@ -1,20 +1,8 @@
--proj
-"F:\Assets\visual studio\ByteBlender"
--src
-"..\src"
--inc
-"F:\Assets\CppLibs\Bite\include"
--move
-"..\x64\Debug\Bite.lib"
-"F:\Assets\CppLibs\Bite\lib\bite64-d.lib"
--move
-"..\x64\Release\Bite.lib"
-"F:\Assets\CppLibs\Bite\lib\bite64.lib"
--move
-"..\Win32\Debug\Bite.lib"
-"F:\Assets\CppLibs\Bite\lib\bite32-d.lib"
--move
-"..\Win32\Release\Bite.lib"
-"F:\Assets\CppLibs\Bite\lib\bite32.lib"
--ignore
-_bite_defines.h
+project "F:\Assets\visual studio\ByteBlender"
+source "__proj__\src"
+output "F:\Assets\CppLibs\Bite"
+move "__proj__\x64\Debug\Bite.lib" "__out__\lib\bite64-d.lib" /overwrite /silent
+move "__proj__\x64\Release\Bite.lib" "__out__\lib\bite64.lib" /overwrite /silent
+move "__proj__\Win32\Debug\Bite.lib" "__out__\lib\bite32-d.lib" /overwrite /silent
+move "__proj__\Win32\Release\Bite.lib" "__out__\lib\bite32.lib" /overwrite /silent
+ignore _bite_defines.h
