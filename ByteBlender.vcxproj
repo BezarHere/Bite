@@ -206,6 +206,7 @@
     <ClInclude Include="src\_bite_dynarray.h" />
     <ClInclude Include="src\_bite_mempool.h" />
     <ClInclude Include="src\_bite_range.h" />
+    <ClInclude Include="src\_bite_reporting.h" />
     <ClInclude Include="src\_bite_span.h" />
     <ClInclude Include="src\_bite_array_stack.h" />
     <ClInclude Include="src\_bite_stream_frame.h" />

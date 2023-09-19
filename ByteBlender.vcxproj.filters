@@ -51,6 +51,9 @@
     <ClInclude Include="src\_bite_range.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\_bite_reporting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bite.cpp">

@@ -4,6 +4,7 @@
 #include "_bite_span.h"
 #include "_bite_array_stack.h"
 #include "_bite_common_passwords.h"
+#include "_bite_reporting.h"
 
 
 
