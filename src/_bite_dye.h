@@ -1,7 +1,9 @@
 #pragma once
 #include "_bite_utility.h"
 #include <iostream>
-
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+#undef WIN32_LEAN_AND_MEAN
 
 namespace bite
 {
