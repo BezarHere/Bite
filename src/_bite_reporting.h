@@ -8,7 +8,7 @@ namespace bite
 	__forceinline void raise(const std::exception &exc)
 	{
 		dye::put_colors({ dye::ColorCode::Red, dye::ColorCode::Black });
-		std::cerr << "#Error:\n" << exc.what() << '\n';
+		std::cerr << exc.what() << '\n';
 		dye::clear_colors();
 		throw exc;
 	}
