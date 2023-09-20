@@ -1,5 +1,4 @@
 #pragma once
-#include <Windows.h>
 #include "_bite_utility.h"
 #include "_bite_dye.h"
 

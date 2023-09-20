@@ -2,15 +2,112 @@
 #include <vector>
 #include <string>
 #include <exception>
+#include <cassert>
 #include "_bite_stream_frame.h"
+#include "_bite_reporting.h"
 #include "_bite_defines.h"
-
+#undef min
+#undef max
 
 
 
 __forceinline char *copymem(const char *src, size_t src_len)
 {
 	return (char *)memcpy(new char[src_len], src, src_len);
+}
+
+class memorybuf : public std::streambuf
+{
+public:
+	inline memorybuf(const char *buf, const std::streamoff sz)
+		: m_buf{ (const char *)memcpy(new char[sz], buf, sz) },
+		m_sz{ sz },
+		m_cur{ 0 }
+
+	{
+	}
+private:
+	inline int_type underflow()
+	{
+		if (m_cur == m_sz)
+			return traits_type::eof();
+		return traits_type::to_int_type(*(m_buf.get() + m_cur));
+	}
+
+	inline int_type uflow()
+	{
+		if (m_cur == m_sz)
+			return traits_type::eof();
+		return traits_type::to_int_type(*(m_buf.get() + m_cur++));
+	}
+
+	inline int_type pbackfail(int_type ch)
+	{
+		const char *cur = m_buf.get() + m_cur;
+		if (!m_cur || (ch != traits_type::eof() && ch != cur[ -1 ]))
+			return traits_type::eof();
+		return traits_type::to_int_type(*(m_buf.get() + --m_cur));
+	}
+
+	inline std::streamsize showmanyc()
+	{
+		return m_sz - m_cur;
+	}
+
+	inline std::streampos seekoff(
+		std::streamoff off,
+		std::ios_base::seekdir way,
+		std::ios_base::openmode wich = std::ios::in | std::ios::out)
+	{
+		switch (way)
+		{
+		case std::ios::beg:
+			m_cur = off;
+			break;
+		case std::ios::cur:
+			m_cur += off;
+			break;
+		case std::ios::end:
+			m_cur = m_sz + off;
+			break;
+		default:
+			return -1;
+		}
+
+		if (m_cur < 0 || m_cur > m_sz)
+			return -1;
+		return m_cur;
+	}
+
+	inline std::streampos seekpos(
+		std::streampos pos,
+		std::ios_base::openmode wich = std::ios::in | std::ios::out)
+	{
+		m_cur = pos;
+		if (m_cur < 0 || m_cur > m_sz)
+			return -1;
+		return m_cur;
+	}
+
+	memorybuf(const memorybuf &) = delete;
+	memorybuf &operator =(const memorybuf &) = delete;
+
+private:
+	const std::shared_ptr<const char[]> m_buf;
+	const std::streamoff m_sz;
+	std::streamoff m_cur;
+};
+
+// will copy buf
+std::istream *bite::load_mem_input(bite::byte_t *buf, const size_t sz)
+{
+	return new std::istream(new memorybuf((char *)buf, sz));
+}
+
+// will copy buf
+std::ostream *bite::load_mem_output(bite::byte_t *buf, const size_t sz)
+{
+	return new std::ostream(new memorybuf((char *)buf, sz));
 }
 
 namespace bite
@@ -57,6 +154,11 @@ namespace bite
 	{
 	}
 
+	StreamReader::StreamReader(byte_t *buffer, const size_t buffer_sz, EndianOrder order)
+		: StreamReader(load_mem_input(buffer, buffer_sz), order)
+	{
+	}
+
 	StreamReader::StreamReader(const std::string &path, EndianOrder order)
 		: StreamFrame(std::shared_ptr<stream_type>( new std::ifstream(path, std::ios::binary) ), order)
 	{
@@ -91,7 +193,6 @@ namespace bite
 		m_stream->seekg(cur);
 		return size;
 	}
-
 
 	void StreamReader::load(char *buffer, size_t length, bool do_endianeness)
 	{

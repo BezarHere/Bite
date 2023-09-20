@@ -3,6 +3,7 @@
 #include <fstream>
 #include <memory>
 
+
 namespace bite
 {
 	constexpr char16_t F_HexTable[256]
@@ -25,6 +26,8 @@ namespace bite
 		'0f', '1f', '2f', '3f', '4f', '5f', '6f', '7f', '8f', '9f', 'af', 'bf', 'cf', 'df', 'ef', 'ff'
 	};
 
+	extern std::istream *load_mem_input(byte_t *buf, const size_t sz);
+	extern std::ostream *load_mem_output(byte_t *buf, const size_t sz);
 
 	typedef std::unique_ptr<byte_t[]> BufferSmartPtr_t;
 	typedef std::shared_ptr<byte_t[]> BufferSharedPtr_t;
@@ -104,6 +107,9 @@ namespace bite
 		StreamReader();
 		StreamReader(std::shared_ptr<stream_type> stream, EndianOrder order);
 		StreamReader(stream_type *stream, EndianOrder order);
+
+		// will copy the buffer
+		StreamReader(byte_t* buffer, const size_t buffer_sz, EndianOrder order);
 		StreamReader(const std::string &path, EndianOrder order);
 
 		void move(intptr_t offset) override;
