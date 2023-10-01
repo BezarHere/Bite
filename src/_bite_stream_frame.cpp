@@ -59,6 +59,7 @@ private:
 		std::ios_base::seekdir way,
 		std::ios_base::openmode wich = std::ios::in | std::ios::out)
 	{
+		(void)wich;
 		switch (way)
 		{
 		case std::ios::beg:
@@ -83,6 +84,7 @@ private:
 		std::streampos pos,
 		std::ios_base::openmode wich = std::ios::in | std::ios::out)
 	{
+		(void)wich;
 		m_cur = pos;
 		if (m_cur < 0 || m_cur > m_sz)
 			return -1;
