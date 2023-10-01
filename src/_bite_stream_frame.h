@@ -157,24 +157,14 @@ namespace bite
 		void flush();
 		void close();
 
-		// if order, the current endian order is applyed to make sure integrale/real numpers are written correctly
-		// rememper to calls flush to flush content to file
+		// if the second template paramter is true, the current endian order is applyed to make sure integrale/real numbers are written correctly
 		template <typename T, bool ORDER = true>
 		void write(const T& value);
 
-		// rememper to calls flush to flush content to file
-		void write(const char *buffer, size_t length);
+		void write(const void *buffer, size_t length);
 
 		// will not advance cursor like write()
-		// rememper to calls flush to flush content to file
-		void insert(const char *buffer, size_t length);
-
-		// rememper to calls flush to flush content to file
-		void writeCstr(const char *buffer, size_t length);
-
-		// will not advance cursor like writeCstr()
-		// rememper to calls flush to flush content to file
-		void insertCstr(const char *buffer, size_t length);
+		void insert(const void *buffer, size_t length);
 	};
 
 

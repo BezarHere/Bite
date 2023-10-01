@@ -266,34 +266,17 @@ namespace bite
 		m_stream.reset();
 	}
 
-	void StreamWriter::write(const char *buffer, size_t length)
+	void StreamWriter::write(const void *buffer, size_t length)
 	{
-		m_stream->write(buffer, length);
+		m_stream->write((const char *)buffer, length);
 	}
-
-	void StreamWriter::writeCstr(const char *buffer, size_t length)
-	{
-		if (length < 2)
-			return;
-		write(buffer, length - 1);
-	}
-
-	void StreamWriter::insert(const char *buffer, size_t length)
+	void StreamWriter::insert(const void *buffer, size_t length)
 	{
 		if (!length)
 			return;
 		write(buffer, length);
 		move(-(intptr_t)length);
 	}
-
-	void StreamWriter::insertCstr(const char *buffer, size_t length)
-	{
-		if (length < 2)
-			return;
-		write(buffer, length - 1);
-		move(1 - (intptr_t)length);
-	}
-
 
 	void M_EndianOrder(char *dst, const char *src, size_t length, EndianOrder order)
 	{

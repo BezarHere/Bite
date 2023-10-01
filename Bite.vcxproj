@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{75051fe1-6063-4b78-a57d-224727e8e222}</ProjectGuid>
-    <RootNamespace>ByteBlender</RootNamespace>
+    <RootNamespace>Bite</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>Bite</ProjectName>
   </PropertyGroup>
@@ -111,7 +111,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>deploy.bat</Command>
+      <Command>hivec /f "$(SolutionDir)hivec.args"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,7 +140,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>deploy.bat</Command>
+      <Command>hivec /f "$(SolutionDir)hivec.args"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -165,7 +165,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>deploy.bat</Command>
+      <Command>hivec /f "$(SolutionDir)hivec.args"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -194,7 +194,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>deploy.bat</Command>
+      <Command>hivec /f "$(SolutionDir)hivec.args"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
