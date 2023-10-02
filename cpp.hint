@@ -7,3 +7,4 @@
 // For more information see https://go.microsoft.com/fwlink/?linkid=865984
 #define BS__NS namespace bite {
 #define FORCEINLINE
+#define UINT32_MAX

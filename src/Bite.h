@@ -5,6 +5,7 @@
 #include "_bite_array_stack.h"
 #include "_bite_common_passwords.h"
 #include "_bite_reporting.h"
+#include "_bite_algorithms.h"
 
 
 
@@ -13,5 +14,14 @@ namespace bite
 	namespace dye
 	{
 	} // dye
+
+	typedef struct
+	{
+		uint8_t major, minor, patch;
+	}Version_t;
+
+	extern constexpr Version_t get_version();
+
+
 } // bite
 

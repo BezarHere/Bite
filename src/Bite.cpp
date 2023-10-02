@@ -6,20 +6,34 @@
 #include "Bite.h"
 #include "_bite_defines.h"
 
-void debug()
-{
-	std::cin.get();
-}
+using namespace bite;
 
-#if 0
-int main()
+typedef struct {
+	uint16_t year;
+	uint8_t month, day;
+}Date_t;
+typedef std::pair<Date_t, Version_t> VersionRecord_t;
+
+constexpr VersionRecord_t Records[]
 {
-	debug();
+	{
+		{2023, 10, 2},
+		{1, 0, 0}
+	},
+};
+constexpr size_t RecordsLength = sizeof(Records) / sizeof(Records[ 0 ]);
+
+namespace bite
+{
+
+	constexpr Version_t get_version()
+	{
+		return Records[ RecordsLength - 1 ].second;
+	}
 }
-#endif
 
 const char *bite::passwords[ 10000 ] {
-	"123456",
+		"123456",
 		"password",
 		"12345678",
 		"qwerty",
@@ -10020,4 +10034,5 @@ const char *bite::passwords[ 10000 ] {
 		"brook",
 		"brady"
 };
+
 

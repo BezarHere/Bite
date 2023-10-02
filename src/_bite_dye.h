@@ -35,6 +35,9 @@ namespace bite
 			ColorCode fg, bg = ColorCode::Black;
 		};
 
+		static constexpr TerminalColor g_DefaultTermColor{ ColorCode::White, ColorCode::Black };
+		static TerminalColor g_current_color{ g_DefaultTermColor };
+
 		inline constexpr uint8_t unpack_colors(TerminalColor theme)
 		{
 			return (uint8_t)theme.fg + ((uint8_t)theme.bg << 4);
@@ -47,25 +50,25 @@ namespace bite
 
 		inline TerminalColor get_colors()
 		{
-			return TerminalColor{};
+			return g_current_color;
 		}
 
-		static const TerminalColor F_DefaultC{ get_colors() };
 
 		inline TerminalColor get_default_colors()
 		{
-			return F_DefaultC;
+			return g_DefaultTermColor;
 		}
 
 		inline void put_colors(TerminalColor theme)
 		{
 			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (WORD)unpack_colors(theme));
+			g_current_color = theme;
 		}
 
 		// will return to the same theme the program started with
 		inline void clear_colors()
 		{
-			put_colors(F_DefaultC);
+			put_colors(g_DefaultTermColor);
 		}
 
 		inline void dye(const std::string &text,

@@ -7,9 +7,7 @@ namespace bite
 
 	__forceinline void raise(const std::exception &exc)
 	{
-		dye::put_colors({ dye::ColorCode::Red, dye::ColorCode::Black });
-		std::cerr << exc.what() << '\n';
-		dye::clear_colors();
+		dye::dye(exc, { dye::ColorCode::LightYellow, dye::ColorCode::Black }, std::cerr);
 		throw exc;
 	}
 
@@ -18,25 +16,20 @@ namespace bite
 		raise(std::runtime_error(msg));
 	}
 
-
 	__forceinline void raise(const char *const msg)
 	{
-		raise(std::runtime_error(msg));
+		raise(std::runtime_error((!msg || !*msg) ? "Error" : msg));
 	}
 
 	__forceinline void warn(const char *const msg)
 	{
-		if (!msg)
+		if (!msg || !*msg)
 			return warn("Warning!");
-		dye::put_colors({ dye::ColorCode::LightYellow, dye::ColorCode::Black });
-		std::cerr << msg << '\n';
-		dye::clear_colors();
+		dye::dye(msg, { dye::ColorCode::LightYellow, dye::ColorCode::Black }, std::cerr);
 	}
 
 	__forceinline void warn(const std::string &msg)
 	{
-		dye::put_colors({ dye::ColorCode::LightYellow, dye::ColorCode::Black });
-		std::cerr << msg << '\n';
-		dye::clear_colors();
+		warn(msg.c_str());
 	}
 }
