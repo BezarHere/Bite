@@ -68,6 +68,85 @@ namespace bite
 			return ~crc;
 		}
 
+		inline BufferSharedPtr_t run_length_encode(const byte_t *input, const size_t input_len, _Out_ size_t &output_len)
+		{
+			constexpr int LengthEncodingThershold = 1;
+
+			// current char and running char
+			int cur, run_cur = -1;
+			// current encoding length
+			int run_len = 0;
+
+			int scores[ 256 ]{};
+
+			for (size_t i{}; i < input_len; i++)
+			{
+				if ((cur = input[ i ]) == run_cur)
+				{
+					if (++run_len % 255)
+						scores[ cur ]++;
+				}
+				else
+				{
+					--scores[ cur ];
+					run_len = 0;
+				}
+				run_cur = cur;
+			}
+
+			// TODO: determine output size
+			// 1. output length should be greater then 32
+			// 2. use the scores table to find what can the size be
+			byte_t *out = new byte_t[ input_len ];
+			int out_offset = 32;
+
+			for (int i{}; i < out_offset; ++i) {
+				cur = 0;
+				for (int j{}; j < 8; ++j)
+				{
+					if (scores[ i * 8 + j ] > 0)
+						cur |= 1 << j;
+				}
+				out[ i ] = (byte_t)cur;
+			}
+
+			cur = 0;
+			run_cur = 0;
+			run_len = 0;
+
+			for (size_t i{}; i < input_len; i++)
+			{
+				cur = input[ i ];
+
+				if (scores[ cur ] <= LengthEncodingThershold)
+				{
+					out[ out_offset++ ] = (byte_t)cur;
+				}
+				else if (cur == run_cur)
+				{
+					++run_len;
+				}
+				else if (run_len > 0)
+				{
+					out[ out_offset++ ] = (byte_t)run_cur;
+					while (run_len > 255)
+					{
+						run_len -= 255;
+						out[ out_offset++ ] = 255u;
+					}
+					out[ out_offset++ ] = (byte_t)(run_len - 1);
+					run_len = 1;
+				}
+
+				run_cur = cur;
+			}
+
+			// TODO: is there a better way?
+			output_len = out_offset;
+			byte_t *out_tmp = (byte_t *)memcpy(new byte_t[ out_offset ], out, out_offset);
+			delete[] out;
+			return BufferSharedPtr_t{ out_tmp };
+		}
 
 
 	}
