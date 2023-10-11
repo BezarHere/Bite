@@ -6,6 +6,7 @@
 #include "_bite_common_passwords.h"
 #include "_bite_reporting.h"
 #include "_bite_algorithms.h"
+#include "_bite_str.h"
 
 
 
