@@ -103,37 +103,62 @@ namespace bite
 
 	// TODO: update to replace more then one marker!
 	template <>
-	inline std::string format(const std::string &str, const std::string &p1)
+	inline std::string format(const std::string &str, const std::string &sub)
 	{
 		const char *cstr = str.c_str();
 		const size_t n = str.length();
-		size_t replace_anchor = (size_t)-1;
+
+		const char *sub_cstr = sub.c_str();
+		const size_t sub_n = sub.length();
+
+		std::vector<size_t> replace_anchors{};
 
 		for (size_t i = 0; i < n - 1; i++)
 		{
-			if (cstr[ i ] == '{' && cstr[ i + 1 ] == '}')
+			// skip escaped chars
+			if (cstr[ i ] == '\\')
 			{
-				replace_anchor = i;
-				break;
+				i++;
+				continue;
 			}
+
+			if (cstr[ i ] == '{' && cstr[ i + 1 ] == '}')
+				replace_anchors.push_back(i++);
 		}
 
 		// no anchor to format
-		if (replace_anchor == (size_t)-1)
+		if (!replace_anchors.size())
 			return str;
 
-		// anchor at start
-		if (!replace_anchor)
+		const size_t final_n = n + ((-2 + sub_n) * replace_anchors.size());
+		span<char> result_cstr{ final_n };
+
+
+		size_t write_offset = 0;
+		size_t read_offset = 0;
+		size_t replacment_str_index = 0;
+
+		for (size_t i = 0; i < n - replace_anchors.size(); i++)
 		{
-			return p1 + str.substr(2);
+			// this index is the position of a repacment string
+			if (i + read_offset == replace_anchors[ replacment_str_index ])
+			{
+
+				for (size_t j = 0; j < sub_n; j++)
+				{
+					result_cstr[ write_offset++ ] = sub_cstr[ j ];
+				}
+
+				read_offset++;
+				// now processing the next replacment
+				replacment_str_index++;
+			}
+			else
+				// no replacment str, fill with the base str chars
+				result_cstr[ write_offset++ ] = str[ i + read_offset ];
 		}
-		// anchor at end
-		else if (replace_anchor == n - 1)
-		{
-			return str.substr(0, n - 2) + p1;
-		}
-		// anchor someware
-		return str.substr(0, replace_anchor) + p1 + str.substr(replace_anchor + 2, n - (replace_anchor + 2));
+
+		return std::string{ result_cstr.data().get(), result_cstr.size() };
 	}
 
 	inline std::string formatv(const std::string &str, std::initializer_list<std::string> s)
