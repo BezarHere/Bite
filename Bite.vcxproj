@@ -228,6 +228,7 @@
     <None Include="cpp.hint" />
     <None Include="deploy.args" />
     <None Include="deploy.bat" />
+    <None Include="README.md" />
     <None Include="rules.ruleset" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

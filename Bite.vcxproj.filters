@@ -79,5 +79,6 @@
     </None>
     <None Include="deploy.args" />
     <None Include="rules.ruleset" />
+    <None Include="README.md" />
   </ItemGroup>
 </Project>
