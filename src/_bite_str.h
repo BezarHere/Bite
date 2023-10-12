@@ -215,8 +215,34 @@ namespace bite
 				// no replacment str, fill with the base str chars
 				result_cstr[ write_offset++ ] = str[ i + read_offset ];
 		}
+
 		return std::string{ result_cstr.data().get(), result_cstr.size() };
 	}
+
+	template <typename _T>
+	inline void _format_unpack_stringfy(std::string *s, const _T &t)
+	{
+		(*s) = std::to_string(t);
+	}
+
+	template <typename _T, typename ..._VT>
+	inline void _format_unpack_stringfy(std::string *s, const _T &t, const _VT &... v)
+	{
+		(*s++) = std::to_string(t);
+		_format_unpack_stringfy(s, v...);
+	}
+
+	template <typename ..._Vals>
+	inline std::string format(const std::string &str, const _Vals &... vals)
+	{
+		constexpr size_t ArgC = sizeof...(vals);
+		std::string strs[ ArgC ];
+		const std::string *pstr = strs;
+		size_t i = 0;
+		_format_unpack_stringfy(strs + i++, vals...);
+		return formatv(str, std::initializer_list<std::string>(pstr, pstr + ArgC));
+	}
+
 
 }
 
