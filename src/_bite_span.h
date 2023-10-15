@@ -82,12 +82,26 @@ namespace bite
 		inline span<_T> &operator=(const span<_U> &copy)
 		{
 			copy._VerfyRange();
-			copy_range_to(copy.m_vals.first, copy.m_vals.second, m_vals);
+			copy_range_to(copy.m_vals.first.get(), copy.m_vals.second, m_vals);
 			return *this;
 		}
 
 		template <typename _U>
 		inline span<_T> &operator=(span<_U> &&move)
+		{
+			m_vals.first.reset(move.m_vals.first.release());
+			m_vals.second = move.m_vals.second;
+			return *this;
+		}
+
+		inline span<_T> &operator=(const span<_T> &copy)
+		{
+			copy._VerfyRange();
+			copy_range_to(copy.m_vals.first.get(), copy.m_vals.second, m_vals);
+			return *this;
+		}
+
+		inline span<_T> &operator=(span<_T> &&move)
 		{
 			m_vals.first.reset(move.m_vals.first.release());
 			m_vals.second = move.m_vals.second;
