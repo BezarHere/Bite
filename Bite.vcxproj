@@ -200,6 +200,7 @@
   <ItemGroup>
     <ClInclude Include="src\Bite.h" />
     <ClInclude Include="src\_bite_algorithms.h" />
+    <ClInclude Include="src\_bite_base.h" />
     <ClInclude Include="src\_bite_common_passwords.h" />
     <ClInclude Include="src\_bite_defines.h" />
     <ClInclude Include="src\_bite_dye.h" />
@@ -211,7 +212,6 @@
     <ClInclude Include="src\_bite_array_stack.h" />
     <ClInclude Include="src\_bite_str.h" />
     <ClInclude Include="src\_bite_stream_frame.h" />
-    <ClInclude Include="src\_bite_utility.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bite.cpp">
@@ -222,6 +222,8 @@
     </ClCompile>
     <ClCompile Include="src\_bite_FileSystem.cpp" />
     <ClCompile Include="src\_bite_FileSystem.h" />
+    <ClCompile Include="src\_bite_net.cpp" />
+    <ClCompile Include="src\_bite_net.h" />
     <ClCompile Include="src\_bite_stream_frame.cpp" />
   </ItemGroup>
   <ItemGroup>

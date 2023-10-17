@@ -1,6 +1,7 @@
 #pragma once
-#include "_bite_utility.h"
+#include "_bite_base.h"
 #include <iostream>
+#include <string>
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #undef WIN32_LEAN_AND_MEAN

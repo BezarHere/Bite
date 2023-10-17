@@ -1,5 +1,5 @@
 #pragma once
-#include "_bite_utility.h"
+#include <string>
 #include "_bite_dye.h"
 
 namespace bite

@@ -1,5 +1,7 @@
 #pragma once
-#include "_bite_utility.h"
+#include "_bite_base.h"
+#include <vector>
+#include <string>
 #include <fstream>
 #include <memory>
 
