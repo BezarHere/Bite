@@ -49,8 +49,7 @@ namespace bite
 		template <typename _U>
 		inline span(const span<_U> &copy) {
 			copy._VerfyRange();
-			_Tidy();
-			copy_range_to(copy.m_vals.first.get(), copy.m_vals.second, m_vals);
+			m_vals = copy.m_vals;
 		}
 		template <typename _U>
 		inline span(span<_U> &&move)
@@ -68,40 +67,26 @@ namespace bite
 
 		inline void swap(span<_T> &other) noexcept
 		{
-			if (this != std::addressof(other))
-			{
-				// swaping ranges will be enough
-				m_vals.first.swap(other.m_vals.first);
-				const size_t end = m_vals.second;
-				m_vals.second = other.m_vals.second;
-				other.m_vals.second = end;
-			}
+			if (this == std::addressof(other))
+				return;
+
+			// swaping ranges will be enough
+			m_vals.first.swap(other.m_vals.first);
+			const size_t end = m_vals.second;
+			m_vals.second = other.m_vals.second;
+			other.m_vals.second = end;
 		}
 
 		template <typename _U>
 		inline span<_T> &operator=(const span<_U> &copy)
 		{
 			copy._VerfyRange();
-			copy_range_to(copy.m_vals.first.get(), copy.m_vals.second, m_vals);
+			m_vals = copy.m_vals;
 			return *this;
 		}
 
 		template <typename _U>
 		inline span<_T> &operator=(span<_U> &&move)
-		{
-			m_vals.first.reset(move.m_vals.first.release());
-			m_vals.second = move.m_vals.second;
-			return *this;
-		}
-
-		inline span<_T> &operator=(const span<_T> &copy)
-		{
-			copy._VerfyRange();
-			copy_range_to(copy.m_vals.first.get(), copy.m_vals.second, m_vals);
-			return *this;
-		}
-
-		inline span<_T> &operator=(span<_T> &&move)
 		{
 			m_vals.first.reset(move.m_vals.first.release());
 			m_vals.second = move.m_vals.second;
@@ -205,4 +190,5 @@ namespace bite
 	private:
 		pair_type m_vals;
 	};
+
 }
