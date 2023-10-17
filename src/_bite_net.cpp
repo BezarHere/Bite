@@ -9,7 +9,7 @@ void test()
 {
 	struct sockaddr_in server_info = { AF_INET, htons(1337) };
 
-	int sock = socket(AF_INET, SOCK_STREAM, 0);
+	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
 
 	//? error
 	if (sock < 0)
@@ -30,7 +30,7 @@ void test()
 	while (true)
 	{
 
-		int clientfd = accept(sock, &client_info, &client_info_size);
+		SOCKET clientfd = accept(sock, &client_info, &client_info_size);
 		
 		//? error
 		if (clientfd < 0)

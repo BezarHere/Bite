@@ -7,10 +7,9 @@
 #define BITE_FORCEINLINE
 #endif
 
-#define isupper(n) n >= 'A' && n <= 'Z'
-#define islower(n) n >= 'a' && n <= 'z'
-#define lower ('a' - 'A')
-#define upper ('A' - 'a')
+#define IS_UPPER(n) n >= 'A' && n <= 'Z'
+#define IS_LOWER(n) n >= 'a' && n <= 'z'
+
 
 namespace std
 {
@@ -22,6 +21,9 @@ namespace std
 
 namespace bite
 {
+	constexpr char Lower = 'a' - 'A';
+	constexpr char Upper = 'A' - 'a';
+
 	template <typename _Elm>
 	class basic_string_view
 	{
@@ -113,7 +115,7 @@ namespace bite
 	{
 		for (size_t i{}; i < len; i++)
 		{
-			if (isupper(src[ i ])) dst[ i ] = src[ i ] + lower;
+			if (IS_UPPER(src[ i ])) dst[ i ] = src[ i ] + Lower;
 		}
 	}
 
@@ -122,7 +124,7 @@ namespace bite
 	{
 		for (size_t i{}; i < len; i++)
 		{
-			if (islower(src[ i ])) dst[ i ] = src[ i ] + upper;
+			if (IS_LOWER(src[ i ])) dst[ i ] = src[ i ] + Upper;
 		}
 	}
 
@@ -152,7 +154,7 @@ namespace bite
 		do
 		{
 			if (!src[ i ]) return;
-			if (isupper(src[ i ])) dst[ i ] = src[ i ] + lower;
+			if (IS_UPPER(src[ i ])) dst[ i ] = src[ i ] + Lower;
 		} while (++i);
 	}
 
@@ -165,7 +167,7 @@ namespace bite
 		do
 		{
 			if (!src[ i ]) return;
-			if (islower(src[ i ])) dst[ i ] = src[ i ] + upper;
+			if (IS_LOWER(src[ i ])) dst[ i ] = src[ i ] + Upper;
 		} while (++i);
 	}
 
@@ -417,7 +419,5 @@ namespace bite
 #undef FORCEINLINE
 #undef BITE_FORCEINLINE
 #endif
-#undef islower
-#undef isupper
-#undef upper
-#undef lower
+#undef IS_LOWER
+#undef IS_UPPER
