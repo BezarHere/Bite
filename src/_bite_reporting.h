@@ -5,18 +5,18 @@
 namespace bite
 {
 
-	__forceinline void raise(const std::exception &exc)
+	__declspec(noreturn) __forceinline void raise(const std::exception &exc)
 	{
-		dye::dye(exc, { dye::ColorCode::LightYellow, dye::ColorCode::Black }, std::cerr);
+		dye::dye(exc, { dye::ColorCode::LightRed, dye::ColorCode::Black }, std::cerr);
 		throw exc;
 	}
 
-	__forceinline void raise(const std::string &msg)
+	__declspec(noreturn) __forceinline void raise(const std::string &msg)
 	{
 		raise(std::runtime_error(msg));
 	}
 
-	__forceinline void raise(const char *const msg)
+	__declspec(noreturn) __forceinline void raise(const char *const msg)
 	{
 		raise(std::runtime_error((!msg || !*msg) ? "Error" : msg));
 	}
