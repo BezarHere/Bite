@@ -17,15 +17,15 @@ namespace bite
 		using reference_type = _T &;
 		using ptr_type = value_type *;
 		using const_ptr_type = const value_type *;
-		using unique_type = std::unique_ptr<value_type[]>;
+		using smart_ptr_type = std::shared_ptr<value_type[]>;
 		using cptr_type = const _T *;
-		using pair_type = std::pair<unique_type, size_t>;
+		using pair_type = std::pair<smart_ptr_type, size_t>;
 		using this_type = span<value_type>;
 
 		inline static constexpr pair_type copy_range(const_ptr_type const begin, const size_t size)
 		{
 			ptr_type p = (ptr_type)memcpy(new value_type[ size ], begin, sizeof(value_type) * size);
-			return { unique_type(p), size };
+			return { smart_ptr_type(p), size };
 		}
 
 		inline static constexpr void copy_range_to(const_ptr_type const begin, const size_t size, pair_type &pair)
@@ -41,7 +41,7 @@ namespace bite
 		// creates a span from a container (e.g. std::vector, std::array)
 		// Not recomended
 		template <typename _C>
-		inline span(const _C &&cnt) : m_vals{ copy_range(cnt.begin(), cnt.size()) } { _VerfyRange(); }
+		inline span(const _C &cnt) : m_vals{ copy_range(cnt.begin(), cnt.size()) } { _VerfyRange(); }
 
 		inline explicit span(ptr_type begin, size_t end) : m_vals{ copy_range(begin, end) } {}
 		inline explicit span(size_t size) : span(new value_type[ size ]{}, size) {}
@@ -173,12 +173,12 @@ namespace bite
 			return b < e;
 		}
 
-		inline unique_type &data() noexcept
+		inline smart_ptr_type &data() noexcept
 		{
 			return m_vals.first;
 		}
 
-		inline const unique_type &data() const noexcept
+		inline const smart_ptr_type &data() const noexcept
 		{
 			return m_vals.first;
 		}
