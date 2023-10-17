@@ -407,7 +407,6 @@ namespace bite
 		const std::string *pstr = strs;
 		size_t i = 0;
 
-		/// WHY IS IT GIVING ME ERRORS!!1!1! IT COMPILES FINE SO HOW IS IT AN ERROR!!12!2
 		_format_unpack_stringfy(strs + i++, vals...);
 		return formatv(str, std::initializer_list<std::string>(pstr, pstr + ArgC));
 	}
