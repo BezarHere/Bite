@@ -262,14 +262,6 @@ namespace bite
 		return n;
 	}
 
-	template <typename _T>
-	inline std::string format(const std::string &str, const _T &v1)
-	{
-		return format(str, std::to_string(v1));
-	}
-
-	// TODO: update to replace more then one marker!
-	template <>
 	inline std::string format(const std::string &str, const std::string &sub)
 	{
 		const char *cstr = str.c_str();
