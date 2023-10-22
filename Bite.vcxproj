@@ -167,6 +167,12 @@
     <PostBuildEvent>
       <Command>hivec /f "$(SolutionDir)hivec.args"</Command>
     </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>Ws2_32.lib</AdditionalDependencies>
+    </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -196,6 +202,12 @@
     <PostBuildEvent>
       <Command>hivec /f "$(SolutionDir)hivec.args"</Command>
     </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>Ws2_32.lib</AdditionalDependencies>
+    </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Bite.h" />

@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <vector>
+#include "_bite_span.h"
 
 
 #ifndef FORCEINLINE

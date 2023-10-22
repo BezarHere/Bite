@@ -7,6 +7,7 @@
 #include "_bite_reporting.h"
 #include "_bite_algorithms.h"
 #include "_bite_str.h"
+#include "_bite_net.h"
 
 
 
