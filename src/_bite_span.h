@@ -44,21 +44,19 @@ namespace bite
 		inline span(const _C &cnt) : m_vals{ copy_range(cnt.begin(), cnt.size()) } { _VerfyRange(); }
 
 		inline explicit span(ptr_type begin, size_t end) : m_vals{ copy_range(begin, end) } {}
+		inline explicit span(smart_ptr_type ptr, size_t size) : m_vals{ ptr, size } {}
 		inline explicit span(size_t size) : span(new value_type[ size ]{}, size) {}
 
-		template <typename _U>
-		inline span(const span<_U> &copy) {
-			copy._VerfyRange();
-			m_vals = copy.m_vals;
-		}
-		template <typename _U>
-		inline span(span<_U> &&move)
+		inline span(const this_type &copy)
+			: m_vals{ copy.m_vals }
 		{
-			_Tidy();
-			m_vals.first.reset(move.m_vals.first.release());
-			m_vals.second = move.m_vals.second;
+			_VerfyRange();
 		}
 
+		inline span(this_type &&move)
+			: m_vals{ move.m_vals }
+		{
+		}
 
 		// clear memory
 		inline ~span()
@@ -77,24 +75,20 @@ namespace bite
 			other.m_vals.second = end;
 		}
 
-		template <typename _U>
-		inline span<_T> &operator=(const span<_U> &copy)
+		inline this_type &operator=(const this_type &copy)
 		{
 			copy._VerfyRange();
 			m_vals = copy.m_vals;
 			return *this;
 		}
 
-		template <typename _U>
-		inline span<_T> &operator=(span<_U> &&move)
+		inline this_type &operator=(this_type &&move)
 		{
-			m_vals.first.reset(move.m_vals.first.release());
-			m_vals.second = move.m_vals.second;
+			m_vals = move.m_vals;
 			return *this;
 		}
 
-		template <typename _U>
-		inline bool operator==(const span<_U> &eq)
+		inline bool operator==(const this_type &eq)
 		{
 			return eq.begin() == begin() && eq.end() == end();
 		}
@@ -173,12 +167,6 @@ namespace bite
 		{
 			if (!m_vals.first || !m_vals.second)
 				throw std::exception("Invalid span ends");
-		}
-
-		inline void _Tidy() noexcept
-		{
-			m_vals.first.reset();
-			_Release();
 		}
 
 		inline void _Release() noexcept
