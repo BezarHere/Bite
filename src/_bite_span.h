@@ -38,11 +38,6 @@ namespace bite
 		inline span() : m_vals{ nullptr, 0 } {  }
 		inline span(ptr_type begin, ptr_type end) : m_vals{ copy_range(begin, end - begin) } { _VerfyRange(); }
 
-		// creates a span from a container (e.g. std::vector, std::array)
-		// Not recomended
-		template <typename _C>
-		inline span(const _C &cnt) : m_vals{ copy_range(cnt.begin(), cnt.size()) } { _VerfyRange(); }
-
 		inline explicit span(ptr_type begin, size_t end) : m_vals{ copy_range(begin, end) } {}
 		inline explicit span(smart_ptr_type ptr, size_t size) : m_vals{ ptr, size } {}
 		inline explicit span(size_t size) : span(new value_type[ size ]{}, size) {}
