@@ -8,6 +8,7 @@
 #include "_bite_algorithms.h"
 #include "_bite_str.h"
 #include "_bite_net.h"
+#include "_bite_file.h"
 
 
 

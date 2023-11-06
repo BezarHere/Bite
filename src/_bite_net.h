@@ -7,7 +7,8 @@ namespace bite
 
 		class Socket
 		{
-
+		public:
+			Socket();
 		};
 
 	}
