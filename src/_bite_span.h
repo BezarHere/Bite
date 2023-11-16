@@ -24,13 +24,13 @@ namespace bite
 
 		inline static constexpr pair_type copy_range(const_ptr_type const begin, const size_t size)
 		{
-			ptr_type p = (ptr_type)memcpy(new value_type[ size ], begin, sizeof(value_type) * size);
+			ptr_type p = (ptr_type)memcpy((void *)new value_type[ size ], begin, sizeof(value_type) * size);
 			return { smart_ptr_type(p), size };
 		}
 
 		inline static constexpr void copy_range_to(const_ptr_type const begin, const size_t size, pair_type &pair)
 		{
-			ptr_type p = (ptr_type)memcpy(new value_type[ size ], begin, sizeof(value_type) * size);
+			ptr_type p = (ptr_type)memcpy((void *)new value_type[ size ], begin, sizeof(value_type) * size);
 			pair.first.reset(p);
 			pair.second = size;
 		}
