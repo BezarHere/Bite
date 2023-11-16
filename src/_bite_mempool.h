@@ -1,5 +1,4 @@
 #pragma once
-#include "_bite_utility.h"
 
 //namespace bite
 //{
