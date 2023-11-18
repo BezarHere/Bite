@@ -4,6 +4,38 @@
 
 namespace bite
 {
+	// when logicly, the code can't normaly reach a given branch
+	// for examble:
+	// int foo(int x)
+	// {
+	//	if (!x)
+	//		return ~x;
+	//	for (int i = 0; i < 32; i++)
+	//		{
+	//			if ((1 << i) & x) return i;
+	//		}
+	//		// possibly another process screwing the memory or sm idk
+	//		throw impossible_branch("how can x not equal zero and the same time have no bits set to 1");
+	//	}
+	class impossible_branch : public std::exception
+	{
+	public:
+		using base_class = std::exception;
+		impossible_branch() noexcept
+			: base_class()
+		{
+		}
+
+		explicit impossible_branch(char const *const _Message) noexcept
+			: base_class(_Message)
+		{
+		}
+
+		impossible_branch(char const *const _Message, int code) noexcept
+			: base_class(_Message, code)
+		{
+		}
+	};
 
 	__declspec(noreturn) __forceinline void raise(const std::exception &exc)
 	{
