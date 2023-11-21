@@ -24,15 +24,21 @@ namespace bite
 
 		inline static constexpr pair_type copy_range(const_ptr_type const begin, const size_t size)
 		{
+			if (!size) return { smart_ptr_type(nullptr), size };
 			ptr_type p = (ptr_type)memcpy((void *)new value_type[ size ], begin, sizeof(value_type) * size);
 			return { smart_ptr_type(p), size };
 		}
 
 		inline static constexpr void copy_range_to(const_ptr_type const begin, const size_t size, pair_type &pair)
 		{
+			pair.second = size;
+			if (!size)
+			{
+				pair.first.reset(nullptr);
+				return;
+			}
 			ptr_type p = (ptr_type)memcpy((void *)new value_type[ size ], begin, sizeof(value_type) * size);
 			pair.first.reset(p);
-			pair.second = size;
 		}
 
 		inline span() : m_vals{ nullptr, 0 } {  }
@@ -48,7 +54,7 @@ namespace bite
 			_VerfyRange();
 		}
 
-		inline span(this_type &&move)
+		inline span(this_type &&move) noexcept
 			: m_vals{ move.m_vals }
 		{
 		}
@@ -77,7 +83,7 @@ namespace bite
 			return *this;
 		}
 
-		inline this_type &operator=(this_type &&move)
+		inline this_type &operator=(this_type &&move) noexcept
 		{
 			m_vals = move.m_vals;
 			return *this;
@@ -160,7 +166,8 @@ namespace bite
 	private:
 		inline void _VerfyRange() const
 		{
-			if (!m_vals.first || !m_vals.second)
+			// the valid range states are Zero-Length nullptr or Fixed-Length ptr
+			if (!m_vals.first != !m_vals.second)
 				throw std::exception("Invalid span ends");
 		}
 
