@@ -115,6 +115,21 @@ namespace bite
 			return m_vals.second;
 		}
 
+		inline bool empty() const noexcept
+		{
+			return !m_vals.first || !m_vals.second;
+		}
+
+		inline smart_ptr_type &data() noexcept
+		{
+			return m_vals.first;
+		}
+
+		inline const smart_ptr_type &data() const noexcept
+		{
+			return m_vals.first;
+		}
+
 		inline reference_type operator[](const size_t index)
 		{
 #if _CONTAINER_DEBUG_LEVEL > 0
@@ -147,21 +162,11 @@ namespace bite
 			return this_type(m_vals.first.get() + slice_range.min, slice_range.size());
 		}
 
-		// doesn't check for nullptrs
-		inline static bool ValidRange(ptr_type b, ptr_type e)
+		inline operator bool() const noexcept
 		{
-			return b < e;
+			return m_vals.first && m_vals.second;
 		}
 
-		inline smart_ptr_type &data() noexcept
-		{
-			return m_vals.first;
-		}
-
-		inline const smart_ptr_type &data() const noexcept
-		{
-			return m_vals.first;
-		}
 
 	private:
 		inline void _VerfyRange() const
