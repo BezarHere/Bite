@@ -9,6 +9,7 @@
 #include "_bite_str.h"
 #include "_bite_net.h"
 #include "_bite_file.h"
+#include "_bite_memorypool.h"
 
 
 

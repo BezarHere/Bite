@@ -218,7 +218,7 @@
     <ClInclude Include="src\_bite_dye.h" />
     <ClInclude Include="src\_bite_dynarray.h" />
     <ClInclude Include="src\_bite_file.h" />
-    <ClInclude Include="src\_bite_mempool.h" />
+    <ClInclude Include="src\_bite_memorypool.h" />
     <ClInclude Include="src\_bite_range.h" />
     <ClInclude Include="src\_bite_reporting.h" />
     <ClInclude Include="src\_bite_span.h" />

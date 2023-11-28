@@ -27,7 +27,7 @@
     <ClInclude Include="src\_bite_dye.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\_bite_mempool.h">
+    <ClInclude Include="src\_bite_memorypool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\_bite_span.h">
