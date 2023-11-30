@@ -58,6 +58,7 @@ namespace bite
 		if (!msg || !*msg)
 			return warn("Warning!");
 		dye::dye(msg, { dye::ColorCode::LightYellow, dye::ColorCode::Black }, std::cerr);
+		std::cerr << '\n';
 	}
 
 	inline void warn(const std::string &msg)
