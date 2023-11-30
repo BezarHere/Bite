@@ -8,3 +8,5 @@
 #define BS__NS namespace bite {
 #define FORCEINLINE
 #define UINT32_MAX
+#define _NORETURN __declspec(noreturn)
+#define _NORETURN __attribute__((noreturn))
