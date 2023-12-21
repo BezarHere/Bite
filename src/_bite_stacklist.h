@@ -41,6 +41,15 @@ namespace bite
 			}
 		}
 
+		inline void resize( size_t newsize ) {
+			trim( 0, newsize, value_type() );
+		}
+
+		// all new empty spaces will have their copy-ctor called with 'filling'
+		inline void resize( size_t newsize, const value_type &filling ) {
+			trim( 0, newsize, filling );
+		}
+
 		inline bool push_back( const _T &value ) {
 			if (full())
 				return false;
@@ -68,16 +77,15 @@ namespace bite
 			if (index >= size())
 				throw std::exception( "Out-of-range pop index" );
 #endif // _CONTAINER_DEBUG_LEVEL > 0
-			
-			(this->operator[]( index )).~value_type();
-
+			(begin()[ index ]).~value_type();
+			_shiftdown1step( index );
 			m_sz--;
 		}
 
 		inline void pop_back() {
 			if (empty())
 				return;
-			pop( size() );
+			pop( size() - 1 );
 		}
 
 		inline bool insert( const size_t index, const value_type &value ) {
@@ -87,7 +95,7 @@ namespace bite
 			if (index > size())
 				throw std::exception( "Out-of-range insert index, range is [0, size]" );
 #endif // _CONTAINER_DEBUG_LEVEL > 0
-			_shiftup( index );
+			_shiftup1step( index );
 			(void)new (begin() + index) value_type( value );
 			m_sz++;
 		}
@@ -165,14 +173,47 @@ namespace bite
 			return m_cnt;
 		}
 
+		inline void trim( size_t from, size_t to, const value_type &filling ) {
+#if _CONTAINER_DEBUG_LEVEL > 0
+			if (from >= to)
+				std::_Xout_of_range( "'from' and 'to' Not in order" );
+			if (to > capacity)
+				std::_Xout_of_range( "new 'to' trim index overflows capacity" );
+#endif // _CONTAINER_DEBUG_LEVEL > 0
+
+			// dtor bottom elements
+			_dtorrange( 0, from );
+
+			size_t nsize = to - from;
+			iterator p = begin();
+
+			// shift down elements to bottom
+			for (size_t i = 0; i < nsize; i++)
+			{
+				// forwarding element to rvalues ensures that they are destoryed
+				(void) new(p) value_type( std::forward<value_type>(p[ from ]) );
+				p++;
+			}
+
+			// dtor top elements
+			_dtorrange( to, m_sz );
+			m_sz = nsize;
+		}
+
 	private:
-		inline void _shiftdown( size_t to ) {
+		inline void _shiftdown1step( size_t to ) {
 			for (size_t i = to + 1; i < m_sz; i++)
 				m_cnt[ i - 1 ] = m_cnt[ i ];
 		}
-		inline void _shiftup( size_t from ) {
+		
+		inline void _shiftup1step( size_t from ) {
 			for (size_t i = m_sz - 1; i >= from; i--)
 				m_cnt[ i + 1 ] = m_cnt[ i ];
+		}
+
+		inline void _dtorrange( size_t from, size_t to ) 			{
+			for (size_t i = from; i < to; i++)
+				(begin() + i)->~value_type();
 		}
 
 	private:
