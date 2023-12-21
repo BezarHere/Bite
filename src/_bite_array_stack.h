@@ -1,12 +1,12 @@
 #pragma once
 #include "_bite_base.h"
-#include "_bite_dynarray.h"
+#include "_bite_stacklist.h"
 #include <stack>
 #include <array>
 
 namespace bite
 {
-	template <typename _T, size_t _SIZE, typename _C = bite::dynarray<_T, _SIZE>>
+	template <typename _T, size_t _SIZE, typename _C = bite::stacklist<_T, _SIZE>>
 	class array_stack
 	{
 	public:

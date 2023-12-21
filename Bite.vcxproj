@@ -218,7 +218,7 @@
     <ClInclude Include="src\_bite_common_passwords.h" />
     <ClInclude Include="src\_bite_defines.h" />
     <ClInclude Include="src\_bite_dye.h" />
-    <ClInclude Include="src\_bite_dynarray.h" />
+    <ClInclude Include="src\_bite_stacklist.h" />
     <ClInclude Include="src\_bite_file.h" />
     <ClInclude Include="src\_bite_FileSystem.h" />
     <ClInclude Include="src\_bite_memorypool.h" />

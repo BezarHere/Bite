@@ -33,7 +33,7 @@
     <ClInclude Include="src\_bite_span.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\_bite_dynarray.h">
+    <ClInclude Include="src\_bite_stacklist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\_bite_array_stack.h">
@@ -60,6 +60,12 @@
     <ClInclude Include="src\_bite_file.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\_bite_FileSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\_bite_net.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Bite.cpp">
@@ -68,13 +74,7 @@
     <ClCompile Include="src\_bite_stream_frame.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\_bite_FileSystem.h">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\_bite_FileSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\_bite_net.h">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\_bite_net.cpp">
