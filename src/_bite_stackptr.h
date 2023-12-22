@@ -5,33 +5,33 @@
 namespace bite
 {
 	template <typename _T>
-	class stack_ptr
+	class stackptr
 	{
 	public:
 		using value_type = _T;
 		using buffer_type = int;
 		static constexpr size_t buffer_size = sizeof( value_type ) / sizeof( buffer_type ) + ( sizeof value_type % sizeof buffer_type != 0 );
 
-		inline stack_ptr()
+		inline stackptr()
 			: m_ptr{ nullptr } {
 		}
 
 		template <typename... _Valty>
-		inline stack_ptr( const _Valty &... args ) {
+		inline stackptr( const _Valty &... args ) {
 			allocate( args );
 		}
 
-		inline stack_ptr( const stack_ptr &copy ) {
+		inline stackptr( const stackptr &copy ) {
 			allocate( *copy.m_ptr );
 		}
 
-		inline stack_ptr( stack_ptr &&move ) {
+		inline stackptr( stackptr &&move ) {
 			/// FIXME: is this safe?
 			allocate( std::move( *move.m_ptr ) );
 			move.m_ptr = NULL;
 		}
 
-		inline ~stack_ptr() {
+		inline ~stackptr() {
 			deallocate();
 		}
 

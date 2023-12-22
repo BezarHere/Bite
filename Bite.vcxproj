@@ -227,6 +227,7 @@
     <ClInclude Include="src\_bite_reporting.h" />
     <ClInclude Include="src\_bite_span.h" />
     <ClInclude Include="src\_bite_array_stack.h" />
+    <ClInclude Include="src\_bite_stackptr.h" />
     <ClInclude Include="src\_bite_str.h" />
     <ClInclude Include="src\_bite_stream_frame.h" />
   </ItemGroup>
