@@ -109,7 +109,7 @@ namespace bite
 		}
 
 		inline bool full() const {
-			return m_sz < capacity;
+			return m_sz >= capacity;
 		}
 
 		inline bool empty() const {
