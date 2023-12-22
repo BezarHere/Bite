@@ -14,6 +14,7 @@ namespace bite
 
 		inline stackptr()
 			: m_ptr{ nullptr } {
+			allocate();
 		}
 
 		template <typename... _Valty>
