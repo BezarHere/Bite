@@ -10,6 +10,7 @@
 #include "_bite_net.h"
 #include "_bite_file.h"
 #include "_bite_memorypool.h"
+#include "_bite_stackptr.h"
 
 
 
