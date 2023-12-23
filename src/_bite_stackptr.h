@@ -12,9 +12,14 @@ namespace bite
 		using buffer_type = int;
 		static constexpr size_t buffer_size = sizeof( value_type ) / sizeof( buffer_type ) + ( sizeof value_type % sizeof buffer_type != 0 );
 
-		inline stackptr()
+		// will not allocate the ptr
+		inline stackptr(std::nullptr_t)
 			: m_ptr{ nullptr } {
-			allocate();
+		}
+
+		// will alocate the ptr with default constructor
+		inline stackptr()
+			: m_ptr{ allocate() } {
 		}
 
 		template <typename... _Valty>
