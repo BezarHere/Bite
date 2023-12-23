@@ -77,6 +77,10 @@ namespace bite
 			return m_ptr;
 		}
 
+		inline operator bool() const noexcept {
+			return m_ptr;
+		}
+
 	private:
 		buffer_type m_buf[ buffer_size ] = { 0 };
 		value_type *m_ptr = nullptr;
