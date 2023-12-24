@@ -208,8 +208,12 @@ namespace bite
 		
 		inline void _shiftup1step( size_t from ) {
 			if (empty()) return;
-			for (size_t i = m_sz - 1; i >= from; i--)
+			size_t i = m_sz;
+			while (i > from)
+			{
+				i--;
 				m_cnt[ i + 1 ] = m_cnt[ i ];
+			}
 		}
 
 		inline void _dtorrange( size_t from, size_t to ) 			{
