@@ -24,7 +24,7 @@ namespace bite
 
 		template <typename... _Valty>
 		inline stackptr( const _Valty &... args ) {
-			allocate( args );
+			allocate( args... );
 		}
 
 		inline stackptr( const stackptr &copy ) {

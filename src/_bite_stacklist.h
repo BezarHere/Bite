@@ -113,7 +113,7 @@ namespace bite
 		}
 
 		inline bool empty() const {
-			return m_sz;
+			return !m_sz;
 		}
 
 		inline void clear() {
@@ -207,6 +207,7 @@ namespace bite
 		}
 		
 		inline void _shiftup1step( size_t from ) {
+			if (empty()) return;
 			for (size_t i = m_sz - 1; i >= from; i--)
 				m_cnt[ i + 1 ] = m_cnt[ i ];
 		}
