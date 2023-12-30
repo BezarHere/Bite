@@ -36,6 +36,10 @@ constexpr VersionRecord_t Records[]
 		{2023, 11, 30},
 		{1, 3, 1}
 	},
+	{
+		{2023, 11, 30},
+		{1, 4, 0}
+	},
 };
 constexpr size_t RecordsLength = sizeof(Records) / sizeof(Records[ 0 ]);
 
