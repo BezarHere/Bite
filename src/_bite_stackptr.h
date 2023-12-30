@@ -43,7 +43,7 @@ namespace bite
 
 		template <typename... _Valty>
 		inline value_type *allocate( _Valty &&... args ) {
-			m_ptr = reinterpret_cast<void *>(m_buf);
+			m_ptr = reinterpret_cast<value_type *>(m_buf);
 			return new(m_ptr) value_type( args... );
 		}
 
