@@ -177,7 +177,9 @@ namespace bite
 
 	inline const std::string &M_EndianName(const EndianOrder order)
 	{
-		return std::string(order == EndianOrder::Little ? "little" : "big");
+		static const std::string Little = "little";
+		static const std::string Big = "big";
+		return order == EndianOrder::Little ? Little : Big;
 	}
 
 	inline constexpr bool M_EndianNativeToMemory(const EndianOrder order)

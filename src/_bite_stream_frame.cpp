@@ -324,7 +324,7 @@ namespace bite
 
 		size_t i{};
 		size_t len{};
-		for (intptr_t bytes_left{ (intptr_t)src_len }; bytes_left > 0; bytes_left -= block_len)
+		for (intptr_t bytes_left{ static_cast<intptr_t>(src_len) }; bytes_left > 0; bytes_left -= block_len)
 		{
 			len = std::min((size_t)bytes_left, block_len);
 			result.emplace_back((byte_t *)memcpy(new char[block_len] {}, src + (block_len * i++), len));

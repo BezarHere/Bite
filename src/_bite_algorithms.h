@@ -143,7 +143,7 @@ namespace bite
 
 			// TODO: is there a better way?
 			output_len = out_offset;
-			byte_t *out_tmp = (byte_t *)memcpy(new byte_t[ out_offset ], out, out_offset);
+			byte_t *out_tmp = static_cast<byte_t *>(memcpy( new byte_t[ out_offset ], out, out_offset ));
 			delete[] out;
 			return BufferSharedPtr_t{ out_tmp };
 		}

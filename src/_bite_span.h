@@ -148,7 +148,7 @@ namespace bite
 			return m_vals.first.get()[ index ];
 		}
 
-		inline const this_type &operator[](const range slice_range) const
+		inline this_type operator[](const range slice_range) const
 		{
 #if _CONTAINER_DEBUG_LEVEL > 0
 			if (slice_range.max >= size() || !slice_range)
