@@ -43,6 +43,7 @@ namespace bite
 
 		// all new empty spaces will have their copy-ctor called with 'filling'
 		inline void resize( size_t newsize, const value_type &filling ) {
+			(void)filling;
 			trim( 0, newsize );
 		}
 
@@ -180,20 +181,20 @@ namespace bite
 			// dtor bottom elements
 			_dtorrange( 0, from );
 
-			size_t nsize = to - from;
+			size_t new_size = to - from;
 			iterator p = begin();
 
 			// shift down elements to bottom
-			for (size_t i = 0; i < nsize; i++)
+			for (size_t i = 0; i < new_size; i++)
 			{
-				// forwarding element to rvalues ensures that they are destoryed
+				// forwarding element to rvalues ensures that they are destroyed
 				(void) new(p) value_type( std::forward<value_type>(p[ from ]) );
 				p++;
 			}
 
 			// dtor top elements
 			_dtorrange( to, m_sz );
-			m_sz = nsize;
+			m_sz = new_size;
 		}
 
 	private:
