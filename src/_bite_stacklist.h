@@ -173,7 +173,7 @@ namespace bite
 			return m_cnt;
 		}
 
-		inline void trim( size_t from, size_t to, const value_type &filling ) {
+		inline void trim( size_t from, size_t to ) {
 #if _CONTAINER_DEBUG_LEVEL > 0
 			if (from >= to)
 				std::_Xout_of_range( "'from' and 'to' Not in order" );
