@@ -4,10 +4,6 @@
 #include <memory>
 #include <vector>
 
-struct ass
-{
-
-};
 namespace bite
 {
 
