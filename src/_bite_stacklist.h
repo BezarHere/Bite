@@ -38,12 +38,12 @@ namespace bite
 		}
 
 		inline void resize( size_t newsize ) {
-			trim( 0, newsize, value_type() );
+			trim( 0, newsize );
 		}
 
 		// all new empty spaces will have their copy-ctor called with 'filling'
 		inline void resize( size_t newsize, const value_type &filling ) {
-			trim( 0, newsize, filling );
+			trim( 0, newsize );
 		}
 
 		inline bool push_back( const _T &value ) {
@@ -113,7 +113,7 @@ namespace bite
 		}
 
 		inline void clear() {
-			for (iterator p = begin(); p++; p < end())
+			for (iterator p = begin(); p < end(); p++)
 			{
 				// placment new doesn't require delete/free
 				p->~value_type();
@@ -221,4 +221,9 @@ namespace bite
 		container_type m_cnt;
 		size_t m_sz{ 0 };
 	};
+
+
+	// for warning/error detection
+	template stacklist<int, 8>;
+	template stacklist<std::vector<int>, 8>;
 }
