@@ -120,6 +120,7 @@ namespace bite
 				p->~value_type();
 				// should we clear the memory?
 			}
+			m_sz = 0;
 		}
 
 		inline value_type &operator[]( const size_t index ) {
